@@ -1,0 +1,10 @@
+V2V Transformer Prototype Results
+=================================
+
+Number of messages: 15
+Embedding size: 768
+
+Criticality Accuracy: 0.2667
+Criticality Weighted F1: 0.2133
+Deadline MAE: 14.9059 seconds
+Deadline RMSE: 24.0725 seconds
