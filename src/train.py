@@ -230,68 +230,37 @@ from sklearn.metrics import confusion_matrix
 
 # ---------- Confusion Matrix ----------
 
-cm = confusion_matrix(
-    actual_criticality,
-    predicted_criticality
-)
 
-plt.figure(figsize=(7, 5))
+import matplotlib.pyplot as plt
+from collections import Counter
 
-sns.heatmap(
-    cm,
-    annot=True,
-    fmt="d",
-    xticklabels=label_encoder.classes_,
-    yticklabels=label_encoder.classes_
-)
+# Actual message criticality labels
+# Replace y_true with your actual label variable
+counts = Counter(y_true)
 
-plt.xlabel("Predicted Criticality")
-plt.ylabel("Actual Criticality")
-plt.title("V2V Criticality Prediction - Confusion Matrix")
+labels = ["Critical", "High", "Medium", "Low"]
+values = [counts.get(label, 0) for label in labels]
 
-plt.tight_layout()
+plt.figure(figsize=(9, 5))
+bars = plt.bar(labels, values)
 
-plt.savefig(
-    "results/confusion_matrix.png",
-    dpi=300
-)
+plt.title("Distribution of V2V Safety Messages")
+plt.xlabel("Message Criticality")
+plt.ylabel("Number of Messages")
 
-plt.close()
-
-
-# ---------- Deadline Prediction ----------
-
-plt.figure(figsize=(8, 5))
-
-plt.plot(
-    range(1, len(actual_deadlines) + 1),
-    actual_deadlines,
-    marker="o",
-    label="Actual Deadline"
-)
-
-plt.plot(
-    range(1, len(predicted_deadlines) + 1),
-    predicted_deadlines,
-    marker="x",
-    label="Predicted Deadline"
-)
-
-plt.xlabel("V2V Message")
-plt.ylabel("Response Deadline (seconds)")
-plt.title("Actual vs Predicted Deadline")
-
-plt.legend()
-plt.grid(True)
+for bar, value in zip(bars, values):
+    plt.text(
+        bar.get_x() + bar.get_width() / 2,
+        bar.get_height(),
+        str(value),
+        ha="center",
+        va="bottom"
+    )
 
 plt.tight_layout()
+plt.savefig("results/criticality_graph.png", dpi=300)
+plt.show()
 
-plt.savefig(
-    "results/deadline_prediction.png",
-    dpi=300
-)
-
-plt.close()
 
 
 # ---------- Save Metrics ----------
