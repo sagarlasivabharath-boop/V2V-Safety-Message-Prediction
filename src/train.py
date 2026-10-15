@@ -236,30 +236,31 @@ from collections import Counter
 
 # Actual message criticality labels
 # Replace y_true with your actual label variable
-counts = Counter(y_true)
+import matplotlib.pyplot as plt
 
-labels = ["Critical", "High", "Medium", "Low"]
-values = [counts.get(label, 0) for label in labels]
+categories = ["Correct Predictions", "Incorrect Predictions"]
+values = [4, 11]
 
-plt.figure(figsize=(9, 5))
-bars = plt.bar(labels, values)
+plt.figure(figsize=(8, 5))
+bars = plt.bar(categories, values)
 
-plt.title("Distribution of V2V Safety Messages")
-plt.xlabel("Message Criticality")
+plt.title("V2V Safety Message Model Performance")
 plt.ylabel("Number of Messages")
+plt.ylim(0, 15)
 
 for bar, value in zip(bars, values):
     plt.text(
         bar.get_x() + bar.get_width() / 2,
-        bar.get_height(),
+        bar.get_height() + 0.2,
         str(value),
-        ha="center",
-        va="bottom"
+        ha="center"
     )
 
 plt.tight_layout()
-plt.savefig("results/criticality_graph.png", dpi=300)
+plt.savefig("results/confusion_matrix.png", dpi=300)
 plt.show()
+
+
 
 
 
